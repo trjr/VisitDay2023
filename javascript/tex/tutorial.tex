@@ -1,0 +1,211 @@
+\input{00-Header.tex}
+
+\begin{document}
+
+\author{Julian Kunkel, Miguel Sanchez Razo, Mohammed Al-Khafajiy}
+
+\makesheetheader
+\parskip 8pt
+
+\textit{%
+This tutorial is an example from the Computer Science module Programming, which is a first year module. It demonstrates how the lab practicals are organized:
+\begin{itemize}
+  \item Lectures deliver the theoretical knowledge.
+  \item Lab practicals apply the theory in practice and provide training for skills such as programming.
+  \item In the Programming module, lab practicals use tutorials consisting of individual work and group work.
+\end{itemize}
+}
+
+\textit{%
+If you were a first year student taking the Programming module,
+by this point, you would already have been given additional exercises to help you practice the basics before attempting these tasks.
+For this session, though, we have decided to jump straight into the more interesting part of the practical.
+}
+
+\textbf{If you have any questions, we encourage you to attract the attention of the lecturer or the assistants, for example, by writing a message in teams.
+We will provide 1:1 support by using Teams calls.
+}
+
+\section*{Learning Objectives}
+
+By the end of the tutorial, you will be able to:
+
+\begin{itemize}
+  \item Use JSFiddle to execute and modify a Javascript program.
+  \item Describe the behaviour of the structured programming theorem constructs (sequence, selection, iteration).
+\end{itemize}
+
+\tableofcontents
+
+\clearpage
+
+\tutorial{Running a program with JSFiddle}{5}
+
+Normally, we would be using the PCs in our PC laboratory and the C programming language.
+For the distance practical, we will be using JavaScript which shares some similarities with C and the JSFiddle platform.
+Please open the link in your browser and ensure you can see a rectangle in the bottom right:
+\url{https://jsfiddle.net/JulianKunkel/7h6qdpeu/}.
+
+TODO...
+
+
+As part of this tutorial, we will use Visual Studio to download, modify and build an existing program.
+
+\begin{steps}
+  \item In the Start menu, search for and start \textbf{Microsoft Visual Studio}.
+  Once Visual Studio is loaded, if you are asked whether you want to "Connect to all your developer services", select: "Not now, maybe later" at the bottom.
+  You may have to confirm again to start the program.
+  % also Start visual studio
+  You will then be presented with the opening splash screen:
+
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.8\textwidth]{img/splash.png}
+      \caption{\label{splash} Microsoft Visual Studio Splash Launcher}
+  \end{figure}
+
+  \item Select “Clone or check out code”.
+  \item Input the URL: \url{https://csgitlab.reading.ac.uk/di918039/visitday.git} and confirm.
+  \item Next, we will look at the basics of Visual Studio to understand the Main Editor and Solution Explorer. \\
+  Have a look at \url{https://docs.microsoft.com/en-us/visualstudio/get-started/visual-studio-ide?view=vs-2019} in a web browser.
+  \item In the \textbf{Solution Explorer}, select the file {\small \textit{SpringProject.sln}}; double-click on it to open the \textit{solution}.
+  \item Compile\footnote{A compilation process generates a executable program from source code.} and run the program by selecting the \textbf{Build Configuration} (framed in red in \Cref{helloworld}) and running the \textbf{Local Windows Debugger} at the top of the interface. The key F5 also triggers compilation and execution.
+
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.8\textwidth]{img/new-hello-world.png}
+      \caption{\label{helloworld} Running a program in Visual Studio}
+  \end{figure}
+
+  This action will open an output interface at the bottom, in which the output of compilation is shown.
+  Once the build is complete, a console window should open containing the expected output, and Visual Studio will switch into the \textbf{Debugger} interface.
+  This process might take some time on the first run, so do not be surprised if it takes a while to load and start the first time you compile and run.
+  Note: If the code contains an error and is not well formed, Visual Studio will not run the code.
+
+  \item You should see a new window opening with a colored rectangle. This is our application.
+  It is not very interesting yet, so just close the window of the started program.
+  \item We will now start to experiment by modifying the source code in the main window. First, open the file “\texttt{draw.c}” in the Solution Explorer.
+  \item The file contains comments starting with the characters “\texttt{//}” that describe the behavior of the program. If you scroll down a few lines you find this code:
+  \begin{lstlisting}
+  // this "function" draws a rectangle
+  void draw(int frame){
+    // define the properties of the color used for the rectangle
+    rgb_t color;
+    color.red   = 255;
+    color.green = 255;
+    color.blue  = 0;
+
+    // define the properties of the rectangle
+    SDL_Rect rect1;
+    rect1.x = 100; // coordinate x
+    rect1.y = 200; // coordinate y
+    rect1.h = 100; // height
+    rect1.w = 100; // width
+    // draw the rectangle with the given properties of the dimensions and color
+    draw_rect(rect1, color);
+  }
+  \end{lstlisting}
+  This code uses our concept of “Sequence” to run several instructions, one after the other, sequentially.
+  It first defines a color (Lines 4-7) using the RGB color mode (0 means no color in the respective channel and 255 means maximum brightness).
+  Then it defines the dimensions of a rectangle (Lines 10-14).
+  Finally, it draws the rectangle by calling the “function” \func{draw\_rect} in Line 16.
+
+  The variable \texttt{frame} contains a number that is incremented every time the image is re-drawn, which may be used to change the graphics over time.
+  \item Experiment by changing some values in the code as you like and rerun the code to see the impact.
+  Maybe change one of the fixed numbers to \texttt{frame}, too?
+\end{steps}
+
+\begin{literature}
+\item Welcome to the Visual Studio IDE
+\url{https://docs.microsoft.com/en-us/visualstudio/get-started/visual-studio-ide?view=vs-2019}
+\item Tour of Visual Studio: \url{https://docs.microsoft.com/en-us/visualstudio/ide/quickstart-ide-orientation?view=vs-2019}
+\end{literature}
+
+
+
+\groupwork{Control Structures for Structured Programming}{35}
+
+As part of this task, we will explore basic control structures in Javascript that implement \textbf{sequence}, \textbf{selection} and \textbf{iteration}.
+We see \textbf{sequence} naturally in action because the program is executed step by step.
+
+We will modify our little \func{draw} function in the same project that we used before, exploring several options.
+There are several different ways you can achieve each goal. Please feel free to explore and play with the code.
+Some steps are marked as \textbf{advanced}; only perform them if you feel comfortable.
+The \textit{hints} section underneath provides some support.
+
+\begin{steps}
+\item We will organize you into breakout groups of 4-5 people
+\item Work through the following tasks: (time: 25 minutes)
+  \begin{enumerate}
+  \item First, modify the code so that the graphics change over time.
+  To do this, we will use the variable \texttt{frame} that contains how often the image has been re-drawn.
+
+  After some initial experimentation, think about how you could make the picture displayed alternate between two states every other frame.
+  To do this, you can use the Javascript construct for \textbf{selection}, which is illustrated in the following code:
+\begin{lstlisting}
+  if ( condition ){
+    // if the condition is not 0, then
+    // run this code
+  } else {
+    // otherwise, run this code here
+  }
+\end{lstlisting}
+  So, you could create, for instance, code like this:
+\begin{lstlisting}
+  function prepareScene(frame) {
+    var posX; // a variable storing the X coordinate
+    if (5 < 10){
+      posX = 10;
+    }else{
+      posX = 15;
+    }
+    addRectangle(posX, 50, [ 255, 0, 0]);
+  }
+\end{lstlisting}
+Which means that if 5 is smaller than 10, which it is, then set the x coordinate of our rectangle to 10.
+The condition here is fixed but normally we use variables in the condition;
+here, you want to do something with the variable \texttt{frame}.
+Modify the if statement above to make the coordinates of the rectangle alternate between two locations depending on the frame number.
+
+  \item Try to move the rectangle from left to right (using the \texttt{frame} variable).
+  Can you stop the rectangle from moving out of the window?
+  \textbf{Advanced}: Can you make it bounce back and forth between the boundaries of the window?
+
+  \item Next, try to create 5 rectangles and place them next to each other. (You can choose the layout.)
+  This can be achieved using the \texttt{for} loop.
+  Remember that this loop runs code for initialization, then checks the condition and, if it is true, runs the loop body. After each iteration, it runs the code in the iteration expression.
+
+  The following example runs the loop body 5 times; the variable \texttt{i} can be used to distinguish the different iterations.
+    \begin{lstlisting}
+      for(var i=0; i < 5; i++){
+        // loop body, may use the variable i
+      }
+    \end{lstlisting}
+
+  \item Modify your code from the previous step to give each rectangle a different color. That is, the first rectangle should have a different color than the next one and so on.
+
+  \item Modify your code again and make the color vary depending on the frame.
+  \textbf{Advanced:} You may see that the color is flickering. For example, if you modified the green channel, the rectangle might get more and more green and then black again.
+  Can you change the code so that the color alternates; that is, it gets gradually more intense (say for 20 frames) and then gradually less intense again?
+
+  \item Organize a 2D shape of 5x5 rectangles next to each other, each with a different color.
+  \end{enumerate}
+
+\item Reflection on the task (5 minutes): discuss the outcome of the practical in your group again. Where did you struggle? What did you learn?
+\item Group discussion (5 minutes): The lecturer will discuss the outcome of the practical with the class; potentially we will look at a program and discuss it.
+If you feel comfortable, feel free to share the link and present one of your programs to the rest of the class.
+\end{steps}
+
+
+\begin{hints}
+  \item The following calculates the remainder of division by two: $5 \% 2$ (the result is 1).
+
+  \item The file Javascript contains our base version of the code and potential solutions for each different step.
+  They are commented out below the main code with some whitespace in between.
+  In order to use them, replace the body of \func{draw} with the content of the respective step.
+
+  \item If you receive any error, please reload the link for jsfiddle:
+  \url{https://jsfiddle.net/JulianKunkel/7h6qdpeu/}
+\end{hints}
+
+\end{document}
